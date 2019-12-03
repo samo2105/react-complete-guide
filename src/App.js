@@ -20,6 +20,7 @@ function App() {
         </a>
       </header>
     </div>
+      //React.createElement('div', null, React.createElement('h1',{className: 'App'}, 'Does this work now?'))
   );
 }
 
