@@ -5,27 +5,33 @@ import './App.css';
 class App extends Component {
     state = {
         persons: [
-            {name: 'Max', age: 28},
-            {name: 'Manu', age: 29},
-            {name: 'Stephanie', age: 30},
+            {id: 'persona1', name: 'Max', age: 28},
+            {id: 'persona2',name: 'Manu', age: 29},
+            {id: 'persona3',name: 'Stephanie', age: 30},
         ],
         otherState: 'some other value',
         showPersons: false
     };
 
-    switchNameHandler = (newName) => {
-        // console.log('hola')
-        this.setState({
-            persons: [
-                {name: newName, age: 24},
-                {name: 'Manuel', age: 19},
-                {name: 'Stephania', age: 38},
-            ]
-        })
+    switchNameHandler = (event, id) => {
+        const personIndex = this.state.persons.findIndex(p => {
+            return p.id === id
+        });
+
+        const person = {
+            ...this.state.persons[personIndex]
+        };
+
+        person.name = event.target.value;
+
+        const persons = [...this.state.persons];
+        persons[personIndex] = person;
+
+        this.setState({persons: persons})
     };
 
     deletePersonHandler = (personIndex) => {
-        const persons = this.state.persons;
+        const persons = [...this.state.persons];
         persons.splice(personIndex, 1);
         this.setState({persons: persons});
     };
@@ -37,7 +43,8 @@ class App extends Component {
 
     render() {
         const style = {
-            backgroundColor: 'white',
+            backgroundColor: 'green',
+            color: 'white',
             font: 'inherit',
             border: '1px solid blue',
             padding: '8px',
@@ -51,23 +58,33 @@ class App extends Component {
                 <div>
                     {this.state.persons.map((person, index) => {
                         return <Person
-                                key={index}
-                                name={person.name}
-                                age={person.age}
-                                click={() => this.deletePersonHandler(index)}/>
+                            key={person.id}
+                            name={person.name}
+                            age={person.age}
+                            changed={(event) => this.switchNameHandler(event, person.id)}
+                            click={() => this.deletePersonHandler(index)}/>
                     })}
                 </div>
             );
+            style.backgroundColor = 'red';
+        }
+
+        let classes = [];
+        if (this.state.persons.length <= 2){
+            classes.push('red');
+        }
+        if (this.state.persons.length <= 1){
+            classes.push('bold')
         }
 
         return (
-            <div className="App">
-                <h1> Soy muchas personas </h1>
-                <button style={style} onClick={this.togglePersonsHandler}>Switch Name</button>
-                {persons}
-            </div>
-            //React.createElement('div', null, React.createElement('h1',{className: 'App'}, 'Does this work now?'))
-        );
+                <div className="App">
+                    <h1> Soy muchas personas </h1>
+                    <p className={classes.join(' ')}>Apreta el boton para mostrar {this.state.persons.length} personas</p>
+                    <button style={style} onClick={this.togglePersonsHandler}>Show persons</button>
+                    {persons}
+                </div>
+            );
     }
 }
 
