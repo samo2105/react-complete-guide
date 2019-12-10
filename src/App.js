@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Person from './Person/Person'
-import './App.css';
+import classes from './App.css';
 
 class App extends Component {
     state = {
@@ -42,17 +42,9 @@ class App extends Component {
     };
 
     render() {
-        const style = {
-            backgroundColor: 'green',
-            color: 'white',
-            font: 'inherit',
-            border: '1px solid blue',
-            padding: '8px',
-            cursor: 'pointer'
-        };
 
         let persons = null;
-
+        let btnClass = '';
         if (this.state.showPersons) {
             persons = (
                 <div>
@@ -66,22 +58,23 @@ class App extends Component {
                     })}
                 </div>
             );
-            style.backgroundColor = 'red';
+
+            btnClass = classes.red
         }
 
-        let classes = [];
-        if (this.state.persons.length <= 2){
-            classes.push('red');
+        const assignedClasses = [];
+        if (this.state.persons.length <= 3){
+            assignedClasses.push(classes.red)
         }
-        if (this.state.persons.length <= 1){
-            classes.push('bold')
+        if (this.state.persons.length <= 2){
+            assignedClasses.push(classes.bold)
         }
 
         return (
-                <div className="App">
+                <div className={classes.App}>
                     <h1> Soy muchas personas </h1>
-                    <p className={classes.join(' ')}>Apreta el boton para mostrar {this.state.persons.length} personas</p>
-                    <button style={style} onClick={this.togglePersonsHandler}>Show persons</button>
+                    <p className={assignedClasses.join(' ')}>Apreta el boton para mostrar {this.state.persons.length} personas</p>
+                    <button className={btnClass} onClick={this.togglePersonsHandler}>Show persons</button>
                     {persons}
                 </div>
             );

@@ -1,10 +1,10 @@
 import React from 'react';
-import './Person.css';
+import classes from './Person.css';
 
 function Person(props) {
 
     return (
-        <div className={"Person"}>
+        <div className={classes.Person}>
             <h1>Persona Nombre: {props.name}</h1>
             <h2> Mi edad es {props.age}</h2>
             <input type="text" onChange={props.changed} value={props.name}/>
