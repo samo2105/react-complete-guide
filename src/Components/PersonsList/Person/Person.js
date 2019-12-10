@@ -2,7 +2,6 @@ import React from 'react';
 import classes from './Person.css';
 
 function Person(props) {
-
     return (
         <div className={classes.Person}>
             <h1>Persona Nombre: {props.name}</h1>
